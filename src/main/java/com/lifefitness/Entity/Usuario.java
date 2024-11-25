@@ -1,19 +1,34 @@
 package com.lifefitness.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 
 @Entity
 public class Usuario {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Geração automática do ID
     private Long id;
+
     private String nome;
     private String sobrenome;
     private String email;
     private String senha;
+    private String cpf;
+    private String telefone;
 
+    @Column(length = 500) // Define um tamanho para o campo de texto longo
+    private String experiencia;
 
+    @Enumerated(EnumType.STRING) // Usa valores fixos do ENUM
+    private Plano plano;
+
+    // Enum de planos
+    public enum Plano {
+        Básico,
+        Avançado
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -54,21 +69,49 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public boolean isEmailValido() {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return this.email.matches(regex);
+    public String getCpf() {
+        return cpf;
     }
 
-    public boolean isSenhaValida() {
-        return this.senha.length() >= 6; // Exemplo de validação simples
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(String experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public Plano getPlano() {
+        return plano;
+    }
+
+    public void setPlano(Plano plano) {
+        this.plano = plano;
     }
 
     @Override
     public String toString() {
-        return "Usuario{id=" + id + ", nome='" + nome + "', sobrenome='" + sobrenome + "', email='" + email + "'}";
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", experiencia='" + experiencia + '\'' +
+                ", plano=" + plano +
+                '}';
     }
-
-
 }
-
-
